@@ -1,0 +1,112 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.example-card {
+  margin-top: 4px;
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  box-shadow: unset;
+  z-index: -2;
+  box-sizing: border-box;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+
+.wrap {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.title {
+  font-weight: bold;
+
+}
+
+.mat-card {
+  font-family: unset;
+}
+
+
+
+.action-buttons {
+  text-align: center;
+}
+
+.example-container {
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(111, 111, 111, 0.50);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 75%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.source-name {
+  margin-left: 5px;
+}
+
+.list-item:hover {
+  cursor: pointer;
+  background-color: #3f51b5;
+  color: white;
+}
+
+.backFont {
+  position: absolute;
+  font-size: 69px;
+  font-family: abril fatface, cursive;
+  line-height: .8;
+  z-index: -1;
+  color: #dacc9f;
+  font-weight: 700;
+  left: -67px;
+  top: 0;
+}
+
+.example-subcard {
+  position: relative !important;
+  top: -90px;
+  margin-left: 50px;
+  z-index: 1;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+  background-color: white;
+}
+
+.card-header-row {
+  display: flex;
+}
+
+.card-content {
+  margin-bottom: auto;
+}
+
+.magazine-content {
+  position: relative
+}
+
+@media screen and (max-width: 770px) {
+  .backFont {
+
+    font-size: 9vw;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .backFont {
+    left: 0;
+
+
+  }
+}

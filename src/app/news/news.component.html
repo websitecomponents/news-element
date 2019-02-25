@@ -1,0 +1,30 @@
+<cdk-virtual-scroll-viewport itemSize="1" class="wrap" #scrollMe appScrollable>
+  <mat-card class="example-card" *cdkVirtualFor="let article of articles">
+
+    <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
+
+    <mat-card class="example-subcard">
+      <mat-card-content class="card-content">
+        <span class="backFont">{{article.source.name}}</span>
+        <div class="magazine-content">
+          <mat-card-title class="title">{{article.title}}</mat-card-title>
+          <p style="
+            font-family: poppins,Arial,sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #666;">
+            {{article.description}}
+          </p>
+          <div class="card-header-row">
+            <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
+              class="example-header-image"></div>
+
+            <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
+          </div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </mat-card>
+</cdk-virtual-scroll-viewport>
