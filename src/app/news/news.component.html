@@ -17,9 +17,12 @@
           </p>
           <div class="card-header-row">
             <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
-              class="example-header-image"></div>
+              class="example-header-image">
 
+            </div>
             <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
+            <span class="example-spacer"></span>
+              <a class="pure-button-hover" mat-raised-button href="{{article.url}}">Read More</a>                     
           </div>
         </div>
 

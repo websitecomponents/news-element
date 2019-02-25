@@ -12,6 +12,10 @@
   box-sizing: border-box;
 }
 
+.example-spacer {
+  flex: 1 1 auto;
+}
+
 .example-header-image {
   background-size: cover;
 }
@@ -24,6 +28,14 @@
 .title {
   font-weight: bold;
 
+}
+
+.pure-button-hover {
+  color: #dacc9f;
+  font-weight: bold;
+}
+.pure-button-hover:hover {
+  color: #d4b75d;
 }
 
 .mat-card {
