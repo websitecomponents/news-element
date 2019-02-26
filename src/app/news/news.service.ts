@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const apiKey = '24db0625418841a79826649541c0f569';
+const apiKey = '768c2adc37a143cb8688e12c40382c9f';
 
 @Injectable({
   providedIn: 'root'

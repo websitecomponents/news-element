@@ -34,6 +34,7 @@
   color: #dacc9f;
   font-weight: bold;
 }
+
 .pure-button-hover:hover {
   color: #d4b75d;
 }
@@ -92,7 +93,8 @@
   top: -90px;
   margin-left: 50px;
   z-index: 1;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
   background-color: white;
 }
 
