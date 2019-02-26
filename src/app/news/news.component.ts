@@ -22,6 +22,7 @@ import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 export class NewsComponent implements OnInit {
   @ViewChild('scrollMe') private myScroller: ElementRef;
   @Input() source: string;
+  @Input() numberofarticles: number;
 
   articles = [];
   offset = new BehaviorSubject(null);
@@ -33,18 +34,18 @@ export class NewsComponent implements OnInit {
   allLoaded = false;
   showReload = false;
   constructor(private newsServie: NewsService, private cd: ChangeDetectorRef) {}
-  size = 10;
+
   ngOnInit() {
     this.getBatch();
   }
   // calling data from News Service
   getBatch() {
     return this.newsServie
-      .initArticle(this.source, this.size)
+      .initArticle(this.source, this.numberofarticles)
       .subscribe(data => {
         this.cd.detectChanges();
         if (!data) {
-          this.size = 4;
+          this.numberofarticles = 4;
           this.trackArticlesCount = 0;
           this.shouldLoad = true;
           this.allLoaded = false;
@@ -68,9 +69,9 @@ export class NewsComponent implements OnInit {
       console.log(e);
       if (this.shouldLoad) {
         this.cd.detectChanges();
-        this.size += 4;
+        this.numberofarticles += 4;
         this.newsServie
-          .initArticle(this.source, this.size)
+          .initArticle(this.source, this.numberofarticles)
           .subscribe(articles => {
             this.cd.detectChanges();
             this.articles = [];
