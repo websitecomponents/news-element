@@ -1,33 +1,87 @@
 <cdk-virtual-scroll-viewport itemSize="1" class="wrap" #scrollMe appScrollable>
-  <mat-card class="example-card" *cdkVirtualFor="let article of articles">
+  <mat-card *ngIf="loadingSpinner" class="example-card-blur">
+    <div *ngFor="let b of blur">
+      <img mat-card-image class="img-article-blur" src="https://i1.wp.com/angularscript.com/wp-content/uploads/2018/06/Progressively-Loading-Images-With-Blur-Effect-min.png?ssl=1" alt="blur">
 
-    <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
+      <mat-card class="example-subcard-blur">
+        <mat-card-content class="card-content">
+          <div class="card-header-row" *ngIf="top">
+            <div mat-card-avatar class="example-header-image">
 
-    <mat-card class="example-subcard">
-      <mat-card-content class="card-content">
-        <span class="backFont">{{article.source.name}}</span>
-        <div class="magazine-content">
-          <mat-card-title class="title">{{article.title}}</mat-card-title>
-          <p style="
-            font-family: poppins,Arial,sans-serif;
-            font-size: 16px;
-            font-weight: 300;
-            color: #666;">
-            {{article.description}}
-          </p>
-          <div class="card-header-row">
+            </div>
+            <h4 style="margin: auto 0px auto 10px;"></h4>
+            <span class="example-spacer"></span>
+
+          </div>
+          <span class="backFont"></span>
+          <div class="magazine-content">
+            <mat-card-title class="title"></mat-card-title>
+            <p style="
+                font-family: poppins,Arial,sans-serif;
+                font-size: 16px;
+                font-weight: 300;
+                color: #666;">
+
+            </p>
+            <div class="card-header-row" *ngIf="!top">
+              <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
+                class="example-header-image">
+
+              </div>
+              <h4 style="margin: auto 0px auto 10px;"></h4>
+              <span class="example-spacer"></span>
+
+            </div>
+
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+  </mat-card>
+  <mat-card class="example-card">
+    <div *ngFor="let article of articles">
+      <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
+
+      <mat-card class="example-subcard">
+        <mat-card-content class="card-content">
+          <div class="card-header-row" *ngIf="top">
             <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
               class="example-header-image">
 
             </div>
             <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
             <span class="example-spacer"></span>
-              <a class="pure-button-hover" mat-raised-button href="{{article.url}}">Read More</a>                     
-          </div>
-        </div>
 
-      </mat-card-content>
-    </mat-card>
+          </div>
+          <span class="backFont">{{article.source.name}}</span>
+          <div class="magazine-content">
+            <mat-card-title class="title">{{article.title}}</mat-card-title>
+            <p style="
+            font-family: poppins,Arial,sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #666;">
+              {{article.description}}
+            </p>
+            <div class="card-header-row" *ngIf="!top">
+              <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
+                class="example-header-image">
+
+              </div>
+              <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
+              <span class="example-spacer"></span>
+              <a class="pure-button-hover" mat-raised-button href="{{article.url}}">Read More</a>
+            </div>
+            <a *ngIf="top" class="pure-button-hover" mat-raised-button href="{{article.url}}">Read More</a>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
 
   </mat-card>
 </cdk-virtual-scroll-viewport>

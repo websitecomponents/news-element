@@ -8,12 +8,22 @@ const apiKey = '768c2adc37a143cb8688e12c40382c9f';
   providedIn: 'root'
 })
 export class NewsService {
+  API_URL = 'https://newsapi.org/v2/everything?sources=new-york-magazine';
 
 
   constructor(private http: HttpClient) { }
-// calling data from news api
-  initArticle(source, size) {
-    return this.http.get('https://newsapi.org/v2/everything?sources=' + source + '&pageSize=' + size + '&apiKey=' + apiKey);
+
+ /**
+  * Callin data from the newsAPI
+  * @param  {} source - Source of news that user define
+  * @param  {} size - Number of how many news user whant's to fetch at once
+  */
+ async initArticle(source, size) {
+    return await this.http.get('https://newsapi.org/v2/everything?sources=' + source + '&pageSize=' + size + '&apiKey=' + apiKey);
+  }
+
+  getArticles() {
+    return this.http.get(this.API_URL);
   }
 
   getArticleById(id) {
