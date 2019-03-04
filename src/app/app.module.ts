@@ -16,9 +16,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { createCustomElement } from '@angular/elements';
-import { ScrollableDirective } from './news/scrollable.directive';
+
 @NgModule({
-  declarations: [ NewsComponent, ScrollableDirective],
+  declarations: [ NewsComponent],
   imports: [
     BrowserModule,
     ScrollingModule,
@@ -34,7 +34,7 @@ import { ScrollableDirective } from './news/scrollable.directive';
   ],
   providers: [],
   bootstrap: [],
-  entryComponents: [NewsComponent]
+  entryComponents: [NewsComponent, ]
 })
 export class AppModule {
   constructor(private injector: Injector) {}

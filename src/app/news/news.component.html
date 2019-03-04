@@ -1,51 +1,54 @@
-<cdk-virtual-scroll-viewport itemSize="1" class="wrap" #scrollMe appScrollable>
-  <mat-card *ngIf="loadingSpinner" class="example-card-blur">
-    <div *ngFor="let b of blur">
-      <img mat-card-image class="img-article-blur" src="https://i1.wp.com/angularscript.com/wp-content/uploads/2018/06/Progressively-Loading-Images-With-Blur-Effect-min.png?ssl=1" alt="blur">
 
-      <mat-card class="example-subcard-blur">
-        <mat-card-content class="card-content">
-          <div class="card-header-row" *ngIf="top">
-            <div mat-card-avatar class="example-header-image">
+<div *ngIf="loadingSpinner">
+ <mat-card *ngFor="let a of blur"  class="example-card-blur">
+    <img mat-card-image class="img-article-blur" src="https://i1.wp.com/angularscript.com/wp-content/uploads/2018/06/Progressively-Loading-Images-With-Blur-Effect-min.png?ssl=1" alt="blur">
+
+    <mat-card  class="example-subcard-blur">
+      <mat-card-content class="card-content">
+        <div class="card-header-row" *ngIf="top">
+          <div mat-card-avatar class="example-header-image">
+
+          </div>
+          <h4 style="margin: auto 0px auto 10px;"></h4>
+          <span class="example-spacer"></span>
+
+        </div>
+        <span class="backFont"></span>
+        <div class="magazine-content">
+          <mat-card-title class="title"></mat-card-title>
+          <p style="
+              font-family: poppins,Arial,sans-serif;
+              font-size: 16px;
+              font-weight: 300;
+              color: #666;">
+            {{a.title}}
+          </p>
+          <div class="card-header-row" *ngIf="!top">
+            <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
+              class="example-header-image">
 
             </div>
             <h4 style="margin: auto 0px auto 10px;"></h4>
             <span class="example-spacer"></span>
 
           </div>
-          <span class="backFont"></span>
-          <div class="magazine-content">
-            <mat-card-title class="title"></mat-card-title>
-            <p style="
-                font-family: poppins,Arial,sans-serif;
-                font-size: 16px;
-                font-weight: 300;
-                color: #666;">
 
-            </p>
-            <div class="card-header-row" *ngIf="!top">
-              <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
-                class="example-header-image">
+        </div>
 
-              </div>
-              <h4 style="margin: auto 0px auto 10px;"></h4>
-              <span class="example-spacer"></span>
-
-            </div>
-
-          </div>
-
-        </mat-card-content>
-      </mat-card>
-    </div>
+      </mat-card-content>
+    </mat-card>
 
 
-  </mat-card>
+</mat-card> 
+</div>
+
+<cdk-virtual-scroll-viewport *ngIf="!loadingSpinner" [hidden]="loadingSpinner" itemSize="150" class="wrap" #scrollMe appScrollable (scrollPosition)="scrollHandler($event)">
+ 
   <mat-card class="example-card">
     <div *ngFor="let article of articles">
       <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
 
-      <mat-card class="example-subcard">
+      <mat-card [ngStyle]="cardStyle()" class="example-subcard">
         <mat-card-content class="card-content">
           <div class="card-header-row" *ngIf="top">
             <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
@@ -59,11 +62,7 @@
           <span class="backFont">{{article.source.name}}</span>
           <div class="magazine-content">
             <mat-card-title class="title">{{article.title}}</mat-card-title>
-            <p style="
-            font-family: poppins,Arial,sans-serif;
-            font-size: 16px;
-            font-weight: 300;
-            color: #666;">
+            <p [ngStyle]="pStyle()" class="p-style">
               {{article.description}}
             </p>
             <div class="card-header-row" *ngIf="!top">

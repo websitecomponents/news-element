@@ -9,7 +9,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  HostListener
+  HostListener,
+  Directive
 } from '@angular/core';
 import { NewsService } from './news.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -23,6 +24,11 @@ import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsComponent implements OnInit {
+  constructor(
+    private newsServie: NewsService,
+    private cd: ChangeDetectorRef,
+    private el: ElementRef
+  ) {}
   @ViewChild('scrollMe') private myScroller: ElementRef;
   /**
    * @param  {string;} source
@@ -34,19 +40,36 @@ export class NewsComponent implements OnInit {
    * @returns number - Number of how many news user whant's to fetch at once
    */
   @Input() numberofarticles: number;
-/**
- * @param  {boolean;} top
- * @returns boolean - Position of card that show's article name and picture.
- * If user set top="true" position of articles name and picture will be set at the top, default is on bottom
- */
+  /**
+   * @param  {boolean;} top
+   * @returns boolean - Position of card that show's article name and picture.
+   * If user set top="true" position of articles name and picture will be set at the top, default is on bottom
+   */
   @Input() top: boolean;
 
   /**
    * blur it set of how much blur card you want before fully loading news
    */
-  blur = [1, 2];
+  blur = [{ title: 'loading' }, { title: 'loading' }];
 
   articles = [];
+  /**
+   * card customization
+   * backgroundcolor set's background color of card
+   * fontsize set's font size in the card
+   */
+  @Input() backgroundcolor;
+  @Input() fontsize;
+
+  /**
+   * paragraph customization
+   * pcolor set's paragraph color
+   * pfontsize set's paragraph font size
+   * pfontweight set's paragraph font weight
+   */
+  @Input() pcolor;
+  @Input() pfontsize: any;
+  @Input() pfontweight;
 
   // scroll
   trackArticlesCount: number;
@@ -54,11 +77,7 @@ export class NewsComponent implements OnInit {
   allLoaded = false;
   showReload = false;
   loadingSpinner: boolean;
-  constructor(
-    private newsServie: NewsService,
-    private cd: ChangeDetectorRef,
-    private el: ElementRef
-  ) {}
+  @Output() scrollPosition = new EventEmitter();
 
   ngOnInit() {
     /**
@@ -70,6 +89,30 @@ export class NewsComponent implements OnInit {
     } else {
       console.log('you have to set source');
     }
+  }
+  /**
+   * Cards style
+   * @returns  returns new style of card
+   */
+  cardStyle() {
+    const styles = {
+      'background-color': this.backgroundcolor,
+      'font-size': this.fontsize
+    };
+    return styles;
+  }
+  /**
+   * paragraph style
+   * @returns returns new style for paragraph
+   */
+  pStyle() {
+    const style = {
+      // tslint:disable-next-line: object-literal-key-quotes
+      color: this.pcolor,
+      'font-size': this.pfontsize,
+      'font-weight': this.pfontweight
+    };
+    return style;
   }
   /**
    * Calling articles data from service
@@ -102,9 +145,8 @@ export class NewsComponent implements OnInit {
           }
         });
       return this.articles;
-    });
+    }, 1000);
   }
-
 
   /**
    * Intinite scrolling
@@ -140,5 +182,24 @@ export class NewsComponent implements OnInit {
         this.cd.detectChanges();
       }
     }
+  }
+
+  @HostListener('scroll', ['$event'])
+  onScroll(event) {
+    try {
+      const top = event.target.scrollTop;
+      const height = this.el.nativeElement.scrollHeight;
+      const offset = this.el.nativeElement.offsetHeight;
+
+      // emit bottom event
+      if (top > height - offset - 1) {
+        this.scrollPosition.emit('bottom');
+      }
+
+      // emit top event
+      if (top === 0) {
+        this.scrollPosition.emit('top');
+      }
+    } catch (err) {}
   }
 }

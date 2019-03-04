@@ -98,6 +98,14 @@
   background-color: white;
 }
 
+.p-style {
+
+  font-family: poppins, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: #666;
+}
+
 .card-header-row {
   display: flex;
 }
@@ -180,15 +188,4 @@
   -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
   background-color: white;
-}
-
-.img-article-blur {
-  animation: shimmer 1s linear 0s infinite forwards;
-  background: #d0d3da;
-  box-shadow: 0 8px 16px rgba(0, 30, 84, 0.1);
-  background-image: linear-gradient(to right,
-    #d0d3da 0%,
-    #e9ebee 20%,
-    #d0d3da 40%,
-    #d0d3da 100%);
 }
