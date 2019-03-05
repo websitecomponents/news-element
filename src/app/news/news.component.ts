@@ -31,6 +31,11 @@ export class NewsComponent implements OnInit {
   ) {}
   @ViewChild('scrollMe') private myScroller: ElementRef;
   /**
+   * Input  sourcepic
+   * @returns link of source picture that users wants
+   */
+  @Input() sourcepic;
+  /**
    * @param  {string;} source
    * @returns string- Source of news that user decide
    */
@@ -77,7 +82,7 @@ export class NewsComponent implements OnInit {
   allLoaded = false;
   showReload = false;
   loadingSpinner: boolean;
-  @Output() scrollPosition = new EventEmitter();
+  articlesize = 5;
 
   ngOnInit() {
     /**
@@ -121,10 +126,11 @@ export class NewsComponent implements OnInit {
     this.loadingSpinner = true;
     setTimeout(async () => {
       await this.newsServie
-        .initArticle(this.source, this.numberofarticles)
+        .initArticle(this.source, this.articlesize)
         .then(data => {
           if (!data) {
-            this.numberofarticles = 4;
+            // tslint:disable-next-line:no-unused-expression
+            this.articlesize = 5;
             this.trackArticlesCount = 0;
             this.shouldLoad = true;
             this.allLoaded = false;
@@ -145,23 +151,20 @@ export class NewsComponent implements OnInit {
           }
         });
       return this.articles;
-    }, 1000);
+    }, 2000);
   }
 
   /**
    * Intinite scrolling
    */
   async scrollHandler(e) {
+    console.log(e);
     if (e === 'bottom') {
-      this.cd.detectChanges();
-      console.log(e);
       if (this.shouldLoad) {
-        this.cd.detectChanges();
-        this.numberofarticles += 4;
+        this.articlesize += 5;
         await this.newsServie
-          .initArticle(this.source, this.numberofarticles)
+          .initArticle(this.source, this.articlesize)
           .then(articles => {
-            this.cd.detectChanges();
             articles.subscribe(articlesDate => {
               // tslint:disable-next-line:no-string-literal
               this.articles = articlesDate['articles'];
@@ -169,37 +172,49 @@ export class NewsComponent implements OnInit {
               // little tweak for optimization after scroll 4+ time to load more aricles
               if (this.articles.length === this.trackArticlesCount) {
                 this.shouldLoad = false;
-                this.cd.detectChanges();
               } else {
                 this.trackArticlesCount = this.articles.length;
-                this.cd.detectChanges();
               }
             });
           });
         // tslint:disable-next-line: no-string-literal
       } else {
         this.allLoaded = true;
-        this.cd.detectChanges();
       }
     }
   }
+}
+
+
+@Directive({
+  selector: '[appScrollable]'
+})
+export class ScrollableDirective {
+
+  @Output() scrollPosition = new EventEmitter();
+
+  constructor(public ell: ElementRef) { }
 
   @HostListener('scroll', ['$event'])
   onScroll(event) {
     try {
+
       const top = event.target.scrollTop;
-      const height = this.el.nativeElement.scrollHeight;
-      const offset = this.el.nativeElement.offsetHeight;
+      const height = this.ell.nativeElement.scrollHeight;
+      const offset = this.ell.nativeElement.offsetHeight;
+
+       // emit top event
+      if (top === 0) {
+        this.scrollPosition.emit('top');
+      }
 
       // emit bottom event
       if (top > height - offset - 1) {
         this.scrollPosition.emit('bottom');
       }
 
-      // emit top event
-      if (top === 0) {
-        this.scrollPosition.emit('top');
-      }
     } catch (err) {}
   }
+
 }
+

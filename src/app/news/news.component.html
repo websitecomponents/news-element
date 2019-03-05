@@ -1,9 +1,56 @@
 
-<div *ngIf="loadingSpinner">
- <mat-card *ngFor="let a of blur"  class="example-card-blur">
-    <img mat-card-image class="img-article-blur" src="https://i1.wp.com/angularscript.com/wp-content/uploads/2018/06/Progressively-Loading-Images-With-Blur-Effect-min.png?ssl=1" alt="blur">
 
-    <mat-card  class="example-subcard-blur">
+<cdk-virtual-scroll-viewport *ngIf="!loadingSpinner" [hidden]="loadingSpinner" itemSize="10" class="wrap" #scrollMe
+  appScrollable (scrollPosition)="scrollHandler($event)">
+
+  <mat-card class="example-card">
+    <div *ngFor="let article of articles">
+      <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
+
+      <mat-card [ngStyle]="cardStyle()" class="example-subcard">
+        <mat-card-content class="card-content">
+          <div class="card-header-row" *ngIf="top">
+            <div mat-card-avatar class="example-header-image">
+              <img mat-card-avatar class="example-header-image" src="{{sourcepic}}" alt="">
+            </div>
+            <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
+            <span class="example-spacer"></span>
+
+          </div>
+          <span class="backFont">{{article.source.name}}</span>
+          <div class="magazine-content">
+            <mat-card-title class="title">{{article.title}}</mat-card-title>
+            <p [ngStyle]="pStyle()" class="p-style">
+              {{article.description}}
+            </p>
+            <div class="card-header-row" *ngIf="!top">
+              <div mat-card-avatar class="example-header-image">
+                  <img mat-card-avatar class="example-header-image" src="{{sourcepic}}" alt="">
+              </div>
+              <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
+              <span class="example-spacer"></span>
+              <a class="pure-button-hover" mat-raised-button href="{{article.url}}">
+                <slot name="readMore">Read More</slot>
+              </a>
+            </div>
+            <a *ngIf="top" class="pure-button-hover" mat-raised-button href="{{article.url}}">
+              <slot name="readMore">Read More</slot>
+            </a>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+  </mat-card>
+</cdk-virtual-scroll-viewport>
+<div *ngIf="loadingSpinner">
+  <mat-card *ngFor="let a of blur" class="example-card-blur">
+    <img mat-card-image class="img-article-blur" src="https://i1.wp.com/angularscript.com/wp-content/uploads/2018/06/Progressively-Loading-Images-With-Blur-Effect-min.png?ssl=1"
+      alt="blur">
+
+    <mat-card class="example-subcard-blur">
       <mat-card-content class="card-content">
         <div class="card-header-row" *ngIf="top">
           <div mat-card-avatar class="example-header-image">
@@ -16,16 +63,18 @@
         <span class="backFont"></span>
         <div class="magazine-content">
           <mat-card-title class="title"></mat-card-title>
-          <p style="
-              font-family: poppins,Arial,sans-serif;
-              font-size: 16px;
-              font-weight: 300;
-              color: #666;">
-            {{a.title}}
-          </p>
+            <div class="loading-text">
+              <span class="loading-text-words">L</span>
+              <span class="loading-text-words">O</span>
+              <span class="loading-text-words">A</span>
+              <span class="loading-text-words">D</span>
+              <span class="loading-text-words">I</span>
+              <span class="loading-text-words">N</span>
+              <span class="loading-text-words">G</span>
+            </div>
+        
           <div class="card-header-row" *ngIf="!top">
-            <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
-              class="example-header-image">
+            <div mat-card-avatar class="example-header-image">
 
             </div>
             <h4 style="margin: auto 0px auto 10px;"></h4>
@@ -39,48 +88,5 @@
     </mat-card>
 
 
-</mat-card> 
-</div>
-
-<cdk-virtual-scroll-viewport *ngIf="!loadingSpinner" [hidden]="loadingSpinner" itemSize="150" class="wrap" #scrollMe appScrollable (scrollPosition)="scrollHandler($event)">
- 
-  <mat-card class="example-card">
-    <div *ngFor="let article of articles">
-      <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
-
-      <mat-card [ngStyle]="cardStyle()" class="example-subcard">
-        <mat-card-content class="card-content">
-          <div class="card-header-row" *ngIf="top">
-            <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
-              class="example-header-image">
-
-            </div>
-            <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
-            <span class="example-spacer"></span>
-
-          </div>
-          <span class="backFont">{{article.source.name}}</span>
-          <div class="magazine-content">
-            <mat-card-title class="title">{{article.title}}</mat-card-title>
-            <p [ngStyle]="pStyle()" class="p-style">
-              {{article.description}}
-            </p>
-            <div class="card-header-row" *ngIf="!top">
-              <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}"
-                class="example-header-image">
-
-              </div>
-              <h4 style="margin: auto 0px auto 10px;">{{article.source.name}}</h4>
-              <span class="example-spacer"></span>
-              <a class="pure-button-hover" mat-raised-button href="{{article.url}}">Read More</a>
-            </div>
-            <a *ngIf="top" class="pure-button-hover" mat-raised-button href="{{article.url}}">Read More</a>
-          </div>
-
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-
   </mat-card>
-</cdk-virtual-scroll-viewport>
+</div>

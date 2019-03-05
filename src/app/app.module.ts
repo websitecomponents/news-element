@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { from } from 'rxjs';
-import { NewsComponent } from './news/news.component';
+import { NewsComponent, ScrollableDirective } from './news/news.component';
 import {
   MatButtonModule,
   MatCardModule,
@@ -18,7 +18,7 @@ import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { createCustomElement } from '@angular/elements';
 
 @NgModule({
-  declarations: [ NewsComponent],
+  declarations: [ NewsComponent, ScrollableDirective],
   imports: [
     BrowserModule,
     ScrollingModule,
@@ -30,7 +30,8 @@ import { createCustomElement } from '@angular/elements';
     MatIconModule,
     MatSidenavModule,
     MatListModule,
-    VirtualScrollerModule
+    VirtualScrollerModule,
+
   ],
   providers: [],
   bootstrap: [],
