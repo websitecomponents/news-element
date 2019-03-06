@@ -7,6 +7,7 @@ const apiKey = '768c2adc37a143cb8688e12c40382c9f';
 @Injectable({
   providedIn: 'root'
 })
+
 export class NewsService {
   API_URL = 'https://newsapi.org/v2/everything?sources=new-york-magazine';
 
@@ -22,8 +23,8 @@ export class NewsService {
     return await this.http.get('https://newsapi.org/v2/everything?sources=' + source + '&pageSize=' + size + '&apiKey=' + apiKey);
   }
 
-  getArticles() {
-    return this.http.get(this.API_URL);
+ async getArticles() {
+    return await this.http.get(this.API_URL);
   }
 
   getArticleById(id) {
