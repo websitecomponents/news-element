@@ -20,7 +20,7 @@ import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.scss'],
-  encapsulation: ViewEncapsulation.ShadowDom,
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsComponent implements OnInit {
@@ -29,6 +29,7 @@ export class NewsComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private el: ElementRef
   ) {}
+
   @ViewChild('scrollMe') private myScroller: ElementRef;
   /**
    * Input  sourcepic
@@ -85,15 +86,7 @@ export class NewsComponent implements OnInit {
   articlesize = 5;
 
   ngOnInit() {
-    /**
-     * if source if define by user then it will call getArticles from service
-     * else it will show warrning
-     */
-    if (this.source) {
-      this.getArticles();
-    } else {
-      console.log('you have to set source');
-    }
+    this.getArticles();
   }
   /**
    * Cards style
@@ -122,12 +115,12 @@ export class NewsComponent implements OnInit {
   /**
    * Calling articles data from service
    */
-  async getArticles() {
+  getArticles() {
     this.loadingSpinner = true;
-    setTimeout(async () => {
-      await this.newsServie
-        .initArticle(this.source, this.articlesize)
-        .then(data => {
+    setTimeout(() => {
+      this.newsServie
+        .initArticle(this.source || 'new-york-magazine', this.articlesize)
+        .subscribe(data => {
           if (!data) {
             // tslint:disable-next-line:no-unused-expression
             this.articlesize = 5;
@@ -138,46 +131,37 @@ export class NewsComponent implements OnInit {
             console.log('Nothing to Show');
             this.showReload = true;
           } else {
-            data.subscribe(articlesData => {
-              this.loadingSpinner = false;
-              this.trackArticlesCount = 0;
-              this.shouldLoad = true;
-              this.allLoaded = false;
-              // tslint:disable-next-line:no-string-literal
-              this.articles = articlesData['articles'];
-              this.cd.detectChanges();
-              return this.articles;
-            });
+            this.loadingSpinner = false;
+            this.trackArticlesCount = 0;
+            this.shouldLoad = true;
+            this.allLoaded = false;
+            this.articles = data['articles'.toString()];
+            this.cd.detectChanges();
           }
         });
-      return this.articles;
     }, 2000);
   }
 
   /**
    * Intinite scrolling
    */
-  async scrollHandler(e) {
+  scrollHandler(e) {
     console.log(e);
     if (e === 'bottom') {
       if (this.shouldLoad) {
         this.articlesize += 5;
-        await this.newsServie
+        this.newsServie
           .initArticle(this.source, this.articlesize)
-          .then(articles => {
-            articles.subscribe(articlesDate => {
-              // tslint:disable-next-line:no-string-literal
-              this.articles = articlesDate['articles'];
-              this.cd.detectChanges();
-              // little tweak for optimization after scroll 4+ time to load more aricles
-              if (this.articles.length === this.trackArticlesCount) {
-                this.shouldLoad = false;
-              } else {
-                this.trackArticlesCount = this.articles.length;
-              }
-            });
+          .subscribe(articlesDate => {
+            this.articles = articlesDate['articles'.toString()];
+            this.cd.detectChanges();
+            // little tweak for optimization after scroll 4+ time to load more aricles
+            if (this.articles.length === this.trackArticlesCount) {
+              this.shouldLoad = false;
+            } else {
+              this.trackArticlesCount = this.articles.length;
+            }
           });
-        // tslint:disable-next-line: no-string-literal
       } else {
         this.allLoaded = true;
       }
@@ -185,25 +169,22 @@ export class NewsComponent implements OnInit {
   }
 }
 
-
 @Directive({
   selector: '[appScrollable]'
 })
 export class ScrollableDirective {
-
   @Output() scrollPosition = new EventEmitter();
 
-  constructor(public ell: ElementRef) { }
+  constructor(public ell: ElementRef) {}
 
   @HostListener('scroll', ['$event'])
   onScroll(event) {
     try {
-
       const top = event.target.scrollTop;
       const height = this.ell.nativeElement.scrollHeight;
       const offset = this.ell.nativeElement.offsetHeight;
 
-       // emit top event
+      // emit top event
       if (top === 0) {
         this.scrollPosition.emit('top');
       }
@@ -212,9 +193,6 @@ export class ScrollableDirective {
       if (top > height - offset - 1) {
         this.scrollPosition.emit('bottom');
       }
-
     } catch (err) {}
   }
-
 }
-

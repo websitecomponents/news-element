@@ -1,0 +1,29 @@
+{
+    "status": "ok",
+    "totalResults": 325,
+    "articles": [{
+        "source": {
+            "id": "new-york-magazine",
+            "name": "New York Magazine"
+        },
+        "author": "Madison Malone Kircher",
+        "title": "YouTube’s Plan to Keep Kids Safe Shows How Little It Cares About Creators",
+        "description": "The platform is finally tackling its child predation problem, but the new rules could prove expensive or impossible for G-rated YouTubers to manage.",
+        "url": "http://nymag.com/intelligencer/2019/03/youtube-kids-safety-plan-burdens-family-friendly-creators.html",
+        "urlToImage": "https://pixel.nymag.com/imgs/daily/intelligencer/2019/03/07/07-youtube-comments-disabled.w1200.h630.jpg",
+        "publishedAt": "2019-03-08T13:00:13Z",
+        "content": "If you watch one of Lindsay Amers YouTube videos and you love it, you cant leave a comment. If you watch one of Lindsay Amers YouTube videos and you hate it, you also cant leave a comment. And if you dont bother to actually watch one of Lindsay Amers videos b… [+8523 chars]"
+    }, {
+        "source": {
+            "id": "new-york-magazine",
+            "name": "New York Magazine"
+        },
+        "author": "Ed Kilgore",
+        "title": "Democrats Aren’t Cultural ‘Extremists’, They’ve Moved With the Country",
+        "description": "Ross Douthat is wrong: Republicans are the ones who have abandoned “cultural centrism.”",
+        "url": "http://nymag.com/intelligencer/2019/03/democrats-have-moved-with-the-country-on-cultural-issues.html",
+        "urlToImage": "https://pixel.nymag.com/imgs/daily/intelligencer/2019/03/06/06-pro-choice-demonstration.w1200.h630.jpg",
+        "publishedAt": "2019-03-08T12:00:41Z",
+        "content": "Economist Brad DeLong created something of a stir with a series of tweets and an interview in which he suggested Clintonian centrists needed to pass the baton of leadership in the Democratic Party to the Left for a while, offering constructive advice in the a… [+5238 chars]"
+    }]
+}

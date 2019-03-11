@@ -6,7 +6,6 @@
   <mat-card class="example-card">
     <div *ngFor="let article of articles">
       <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
-
       <mat-card [ngStyle]="cardStyle()" class="example-subcard">
         <mat-card-content class="card-content">
           <div class="card-header-row" *ngIf="top">

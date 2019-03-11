@@ -17,6 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 import { createCustomElement } from '@angular/elements';
 
+// import third-party module
+import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
+
 @NgModule({
   declarations: [ NewsComponent, ScrollableDirective],
   imports: [
@@ -31,6 +34,7 @@ import { createCustomElement } from '@angular/elements';
     MatSidenavModule,
     MatListModule,
     VirtualScrollerModule,
+    AnimateOnScrollModule.forRoot()
 
   ],
   providers: [],
